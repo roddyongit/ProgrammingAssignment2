@@ -1,5 +1,6 @@
 ## This R file contains two functions:
-##   1. makeCacheMatrix
+##
+## 1. makeCacheMatrix
 ##          a) Recieves a matrix as input paramter         
 ##          b) Declares a variable 'm' to store the results of an inversed 
 ##             matrix
@@ -7,20 +8,24 @@
 ##                  i. Get the new non-cached matrix: "get"
 ##                 ii. Get the already cached matrix: "getsolve"
 ##                iii. Set the initial value of the matrix to invert: "set"
-##                 iv. Calculate the inverse of the matrix if not already cached: "setsolve"
-##   2. cacheSolve
-##
-##
-##
-##
-## -----------------------------------------------------------------
-## 
+##                 iv. Calculate the inverse of the matrix if not 
+##                     already cached: "setsolve"
+## 2. cacheSolve
+##        This function takes a matrix 'x' as input parameter
+##        checks whether a similar matrix is already stored in the global env.
+##        If a matrix = x is found in the global env, then the already cached
+##        inverse of the matrix is returned (see statamente return(m) with 
+##        no need to recalculate it with the statement m <- solve(data, ...)
+## ---------------------------------------------------------------------------
 
-## This function receive a matrix as input parameter
-##  
-##
+
+## ---------------------------------------------------------------------------
+## This function receive a matrix as input parameter and
+## declares the get and set method to retrieve or calculate the
+## inverse of the matrix passed in the argument
+## ---------------------------------------------------------------------------
 makeCacheMatrix <- function(x = matrix()) {
-
+        
         m <- NULL
         set <- function(y) {
                 x <<- y
@@ -32,28 +37,26 @@ makeCacheMatrix <- function(x = matrix()) {
         list(set = set, get = get,
              setsolve = setsolve,
              getsolve = getsolve) 
-
+        
 }
 
-## This function takes a matrix 'x' as input parameter
-## checks whether a similar matrix is already stored in the global env.
-## If a matrix = x is found in the global env, then the already cached
-## inverse of the matrix is returned (see statamente return(m) with 
-## no need to recalculate it with the statement m <- solve(data, ...) below.
-
+## -------------------------------------------------------------------
+## Calculate the inverse of the matrix passed in the input paramter
+## or returns the already cached matrix if found in the Global env.
+## -------------------------------------------------------------------
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-        m <- x$getsolve()
-        if(!is.null(m)) {
+        m <- x$getsolve()   ## set m to the cached inverse matrix
+        if(!is.null(m)) {   ## checks whether there is a cached matrix 
                 message("getting cached data")
                 return(m)      ## Returns the matrix previously cached.
         }
-        ## ------------------------------------------------------------------                       
+        ## -------------------------------------------------------------------                       
         data <- x$get()        ## Stores the matrix passed as parameter in data 
         m <- solve(data, ...)  ## Calculates the inverse of the matrix 
                                ## and stores the results in m
         x$setsolve(m)          ## Stores the inverse of the matrix calculate in 
-                               ## the previous line in the Global env as "m"
-        ## ------------------------------------------------------------------                       
+        ## the previous line in the Global env as "m"
+        ## -------------------------------------------------------------------                       
         m                      ## Returns the inverse of the matrix
 }
