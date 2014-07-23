@@ -1,5 +1,17 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This R file contains two functions:
+##   1. makeCacheMatrix
+##          a) Recieves a matrix as input paramter         
+##          b) Declares a variable 'm' to store the results of an inversed 
+##             matrix
+##          c) Declares 4 method to:
+##                  i. Get the new non-cached matrix: "get"
+##                 ii. Get the already cached matrix: "getsolve"
+##                iii. Set the initial value of the matrix to invert: "set"
+##                 iv. Calculate the inverse of the matrix if not already cached: "setsolve"
+##   2. cacheSolve
+##
+##
+##
 ##
 ## -----------------------------------------------------------------
 ## 
@@ -19,7 +31,7 @@ makeCacheMatrix <- function(x = matrix()) {
         getsolve <- function() m
         list(set = set, get = get,
              setsolve = setsolve,
-             getsolve = getsolve)
+             getsolve = getsolve) 
 
 }
 
@@ -36,11 +48,12 @@ cacheSolve <- function(x, ...) {
                 message("getting cached data")
                 return(m)      ## Returns the matrix previously cached.
         }
+        ## ------------------------------------------------------------------                       
         data <- x$get()        ## Stores the matrix passed as parameter in data 
         m <- solve(data, ...)  ## Calculates the inverse of the matrix 
                                ## and stores the results in m
         x$setsolve(m)          ## Stores the inverse of the matrix calculate in 
                                ## the previous line in the Global env as "m"
-                               
+        ## ------------------------------------------------------------------                       
         m                      ## Returns the inverse of the matrix
 }
