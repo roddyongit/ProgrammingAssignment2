@@ -1,15 +1,44 @@
 ## Put comments here that give an overall description of what your
 ## functions do
+## -----------------------------------------------------------------
+## 
 
-## Write a short comment describing this function
+## This function receive a matrix as input parameter
 
 makeCacheMatrix <- function(x = matrix()) {
 
+        m <- NULL
+        set <- function(y) {
+                x <<- y
+                m <<- NULL
+        }
+        get <- function() x
+        setsolve <- function(solve) m <<- solve
+        getsolve <- function() m
+        list(set = set, get = get,
+             setsolve = setsolve,
+             getsolve = getsolve)
+
 }
 
-
-## Write a short comment describing this function
+## This function takes a matrix 'x' as input parameter
+## checks whether a similar matrix is already stored in the global env.
+## If a matrix = x is found in the global env, then the already cached
+## inverse of the matrix is returned (see statamente return(m) with 
+## no need to recalculate it with the statement m <- solve(data, ...) below.
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
+        m <- x$getsolve()
+        if(!is.null(m)) {
+                message("getting cached data")
+                return(m)      ## Returns the matrix previously cached.
+        }
+        data <- x$get()        ## Stores the matrix passed as parameter in data 
+        m <- solve(data, ...)  ## Calculates the inverse of the matrix 
+                               ## and stores the results in m
+        x$setsolve(m)          ## Stores the inverse of the matrix calculate in 
+                               ## the previous line in the Global env as "m"
+                               
+        m                      ## Returns the inverse of the matrix
 }
