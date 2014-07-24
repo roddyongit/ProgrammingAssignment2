@@ -18,7 +18,6 @@
 ##        no need to recalculate it with the statement m <- solve(data, ...)
 ## ---------------------------------------------------------------------------
 
-
 ## ---------------------------------------------------------------------------
 ## This function receive a matrix as input parameter and
 ## declares the get and set method to retrieve or calculate the
@@ -41,22 +40,20 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 ## -------------------------------------------------------------------
-## Calculate the inverse of the matrix passed in the input paramter
-## or returns the already cached matrix if found in the Global env.
+## This function returns cached matrix inverse using computed matrix
+## in the makeCacheMatrix function
 ## -------------------------------------------------------------------
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-        m <- x$getsolve()   ## set m to the cached inverse matrix
-        if(!is.null(m)) {   ## checks whether there is a cached matrix 
+        m <- x$getsolve()   
+        if(!is.null(m)) {   
                 message("getting cached data")
                 return(m)      ## Returns the matrix previously cached.
         }
         ## -------------------------------------------------------------------                       
-        data <- x$get()        ## Stores the matrix passed as parameter in data 
+        data <- x$get()        
         m <- solve(data, ...)  ## Calculates the inverse of the matrix 
                                ## and stores the results in m
-        x$setsolve(m)          ## Stores the inverse of the matrix calculate in 
-        ## the previous line in the Global env as "m"
-        ## -------------------------------------------------------------------                       
-        m                      ## Returns the inverse of the matrix
+        x$setsolve(m)          
+        m                      
 }
