@@ -1,3 +1,4 @@
+## 
 ## This R file contains two functions:
 ##
 ## 1. makeCacheMatrix
@@ -36,8 +37,7 @@ makeCacheMatrix <- function(x = matrix()) {
         list(set = set, get = get,
              setinverse = setinverse,
              getinverse = getinverse) 
-        
-}
+        }
 
 ## -------------------------------------------------------------------
 ## This function returns cached matrix inverse using computed matrix
